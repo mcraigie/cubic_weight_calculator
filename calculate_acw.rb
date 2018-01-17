@@ -56,3 +56,7 @@ def cubic_weight(product) # in grams
   size = product[:size]
   size.empty? ? 0 : size.values.reduce(:*) * (CONFIG[:conversion_factor_kg_m3] / 1000.0)
 end
+
+def average(array)
+  array.sum / array.length.to_f
+end
