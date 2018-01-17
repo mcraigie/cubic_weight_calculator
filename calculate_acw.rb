@@ -51,3 +51,8 @@ def validate_configuration_values(config)
 
   abort('Error: Must specify a category') if config[:categories].empty?
 end
+
+def cubic_weight(product) # in grams
+  size = product[:size]
+  size.empty? ? 0 : size.values.reduce(:*) * (CONFIG[:conversion_factor_kg_m3] / 1000.0)
+end
