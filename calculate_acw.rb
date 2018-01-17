@@ -64,6 +64,12 @@ rescue StandardError => e
   abort("Error: Unable to retrieve page\n#{e.message}")
 end
 
+def filter_products(products)
+  categories = CONFIG[:categories]
+  filtered = products.select { |product| categories.include?(product[:category]) }
+  CONFIG[:include_sizeless] ? filtered : filtered.reject { |product| product[:size].empty? }
+end
+
 def cubic_weight(product) # in grams
   size = product[:size]
   size.empty? ? 0 : size.values.reduce(:*) * (CONFIG[:conversion_factor_kg_m3] / 1000.0)
@@ -82,6 +88,7 @@ Net::HTTP.start(URI(CONFIG[:api_host]).host) do |http|
   while next_page_path
     page = retrieve_page(http, next_page_path)
     next_page_path = page[:next]
+    products = filter_products(page[:objects])
     cubic_weights.concat(products.map { |product| cubic_weight(product) })
   end
 end
