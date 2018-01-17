@@ -1,0 +1,9 @@
+{
+  "api_host": "http://wp8m3he1wt.s3-website-ap-southeast-2.amazonaws.com",
+  "starting_page": "/api/products/1",
+  "categories": ["Air Conditioners"],
+  "include_sizeless": false,
+  "conversion_factor_kg_m3": 250,
+  "result_unit": "kg",
+  "result_rounding": 2
+}
