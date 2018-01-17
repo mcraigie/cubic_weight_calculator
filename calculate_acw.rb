@@ -79,6 +79,29 @@ def average(array)
   array.sum / array.length.to_f
 end
 
+def format_result(average)
+  result = case CONFIG[:result_unit]
+           when 'g'
+             average
+           when 'kg'
+             average / 1000
+           end
+
+  "#{result.round(CONFIG[:result_rounding])}#{CONFIG[:result_unit]}"
+end
+
+def search_params
+  "#{CONFIG[:categories].join(' & ')} (sizeless: #{CONFIG[:include_sizeless] ? 'in' : 'ex'}cluded)"
+end
+
+def display_results(cubic_weights)
+  if cubic_weights.empty?
+    puts "No products found matching #{search_params}"
+  else
+    puts "Average Cubic Weight for #{search_params}: #{format_result(average(cubic_weights))}"
+  end
+end
+
 CONFIG = load_configuration
 next_page_path = CONFIG[:starting_page]
 cubic_weights = []
@@ -92,3 +115,5 @@ Net::HTTP.start(URI(CONFIG[:api_host]).host) do |http|
     cubic_weights.concat(products.map { |product| cubic_weight(product) })
   end
 end
+
+display_results(cubic_weights)
