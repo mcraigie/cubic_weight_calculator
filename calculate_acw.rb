@@ -35,3 +35,19 @@ def validate_configuration_presence(config)
   unused = config.keys - required
   abort("Error: Unused configuration options: (#{unused})") unless unused.empty?
 end
+
+def validate_configuration_values(config)
+  abort('Error: Configuration options cannot be nil') if config.values.include?(nil)
+
+  unless config[:conversion_factor_kg_m3].is_a?(Numeric)
+    abort('Error: Conversion factor must be numeric')
+  end
+
+  unless config[:result_rounding].is_a?(Integer) && config[:result_rounding] >= 0
+    abort('Error: Rounding must be a positive integer')
+  end
+
+  abort('Error: Result unit must be "kg" or "g"') unless %w[kg g].include?(config[:result_unit])
+
+  abort('Error: Must specify a category') if config[:categories].empty?
+end
