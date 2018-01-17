@@ -6,7 +6,7 @@ It was designed for and tested with ruby 2.4.1 and does require any non-standard
 
 All configuration is stored in ./config.json
 
-##Configuration options:
+## Configuration options:
 
 * api_host: the host machine for the products API you wish to query
 * starting_page: the API query for the first page of products
@@ -16,7 +16,7 @@ All configuration is stored in ./config.json
 * result_unit: whether the result should be provided in kilograms or grams
 * result_rounding: how many decimal places should be included in the result
 
-##Usage:
+## Usage:
 
 ```bash
 # if the script has the executable permission:
